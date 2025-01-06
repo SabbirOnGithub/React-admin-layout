@@ -21,8 +21,17 @@ import {
 } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { MenuItem } from './MenuItem';
+import { useState } from 'react';
 
 export const Sidebar = ({ isCollapsed }) => {
+
+    const [selectedPath, setSelectedPath] = useState(['Dashboard']);
+
+    const handleSelect = (label) => {
+        setSelectedPath([label]);
+    };
+
+
     const menuItems = [
         {
             icon: LayoutDashboard,
@@ -137,16 +146,21 @@ export const Sidebar = ({ isCollapsed }) => {
                 }`}
         >
             {/* Fixed Header Section */}
-            <div className="p-2 border-b text-center">
+            <div className="p-4 border-b">
                 <h2 className="text-lg font-semibold text-gray-800">Admin Panel</h2>
             </div>
 
             {/* Scrollable Navigation Section with custom scrollbar */}
-            <nav className="flex-1 overflow-y-auto custom-scrollbar hover:custom-scrollbar">
-                <div className="p-1">
+            <nav className="flex-1 overflow-y-auto custom-scrollbar">
+                <div className="p-4">
                     <div className="space-y-1">
                         {menuItems.map((item, index) => (
-                            <MenuItem key={index} item={item} />
+                            <MenuItem
+                                key={index}
+                                item={item}
+                                selectedPath={selectedPath}
+                                onSelect={handleSelect}
+                            />
                         ))}
                     </div>
                 </div>
